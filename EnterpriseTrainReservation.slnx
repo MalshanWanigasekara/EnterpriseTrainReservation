@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="APIGW/APIGW.csproj" />
+  <Project Path="BookingService/BookingService.csproj" />
+  <Project Path="PredictionService/PredictionService.csproj" />
+  <Project Path="ReportingService/ReportingService.csproj" />
+  <Project Path="Shared/Shared.csproj" Id="b5cdd22f-6a59-411a-bc70-2c5334c560b2" />
+  <Project Path="TrainReservation.Client/TrainReservation.Client.csproj" />
+  <Project Path="UserService/UserService.csproj" />
+</Solution>

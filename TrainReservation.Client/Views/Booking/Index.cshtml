@@ -1,0 +1,238 @@
+﻿@model List<Shared.DTOs.BookingDto>
+
+@{
+    ViewData["Title"] = "My Bookings";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <div>
+
+        <h2 class="fw-bold text-primary">
+
+            🚆 My Bookings
+
+        </h2>
+
+        <p class="text-muted">
+
+            View, edit and manage your train reservations.
+
+        </p>
+
+    </div>
+
+    <a asp-action="Create"
+       class="btn btn-primary btn-lg">
+
+        <i class="bi bi-plus-circle"></i>
+
+        New Booking
+
+    </a>
+
+</div>
+
+@if (!Model.Any())
+{
+    <div class="card shadow border-0">
+
+        <div class="card-body text-center p-5">
+
+            <h3>
+
+                🚆
+
+            </h3>
+
+            <h4>
+
+                No Bookings Found
+
+            </h4>
+
+            <p class="text-muted">
+
+                You haven't created any bookings yet.
+
+            </p>
+
+            <a asp-action="Create"
+               class="btn btn-primary">
+
+                Create Your First Booking
+
+            </a>
+
+        </div>
+
+    </div>
+}
+else
+{
+
+    @foreach (var booking in Model)
+    {
+
+        <div class="card shadow-lg border-0 mb-4">
+
+            <div class="card-body">
+
+                <div class="row align-items-center">
+
+                    <div class="col-lg-2">
+
+                        <h5 class="text-primary">
+
+                            Booking
+
+                        </h5>
+
+                        <h3>
+
+                            #@booking.BookingId
+
+                        </h3>
+
+                    </div>
+
+                    <div class="col-lg-3">
+
+                        <small class="text-muted">
+
+                            Train
+
+                        </small>
+
+                        <h5>
+
+                            🚆 @booking.Train?.TrainNumber
+
+                        </h5>
+
+                        <div>
+
+                            @booking.Train?.StartStation
+
+                            →
+
+                            @booking.Train?.EndStation
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <small class="text-muted">
+
+                            Travel Date
+
+                        </small>
+
+                        <h5>
+
+                            @booking.TravelDate.ToString("dd MMM yyyy")
+
+                        </h5>
+
+                    </div>
+
+                    <div class="col-lg-2">
+
+                        <small class="text-muted">
+
+                            Total Fare
+
+                        </small>
+
+                        <h4 class="text-success">
+
+                            RM @booking.TotalAmount.ToString("0.00")
+
+                        </h4>
+
+                    </div>
+
+                    <div class="col-lg-1">
+
+                        @if (booking.BookingStatus == "CONFIRMED")
+                        {
+                            <span class="badge bg-success">
+
+                                Confirmed
+
+                            </span>
+                        }
+                        else if (booking.BookingStatus == "CANCELLED")
+                        {
+                            <span class="badge bg-danger">
+
+                                Cancelled
+
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">
+
+                                @booking.BookingStatus
+
+                            </span>
+                        }
+
+                    </div>
+
+                    <div class="col-lg-2 text-end">
+
+                        <a asp-action="Details"
+                           asp-route-id="@booking.BookingId"
+                           class="btn btn-outline-primary btn-sm mb-2 w-100">
+
+                            <i class="bi bi-eye"></i>
+
+                            Details
+
+                        </a>
+
+                        @if (booking.BookingStatus != "CANCELLED")
+                        {
+
+                            <a asp-action="Edit"
+                               asp-route-id="@booking.BookingId"
+                               class="btn btn-outline-warning btn-sm mb-2 w-100">
+
+                                <i class="bi bi-pencil-square"></i>
+
+                                Edit
+
+                            </a>
+
+                            <form asp-action="Cancel"
+                                  asp-route-id="@booking.BookingId"
+                                  method="post">
+
+                                <button class="btn btn-outline-danger btn-sm w-100"
+                                        onclick="return confirm('Cancel this booking?')">
+
+                                    <i class="bi bi-trash"></i>
+
+                                    Cancel
+
+                                </button>
+
+                            </form>
+
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    }
+
+}

@@ -1,0 +1,332 @@
+﻿@model Shared.DTOs.BookingDto
+
+@{
+    ViewData["Title"] = "Booking Details";
+}
+
+<div class="row">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-lg border-0">
+
+            <div class="card-header bg-primary text-white">
+
+                <h3 class="mb-0">
+
+                    🎫 Booking Details
+
+                </h3>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row mb-4">
+
+                    <div class="col-md-6">
+
+                        <h6 class="text-muted">
+
+                            Booking Reference
+
+                        </h6>
+
+                        <h3>
+
+                            #@Model.BookingId
+
+                        </h3>
+
+                    </div>
+
+                    <div class="col-md-6 text-end">
+
+                        @if (Model.BookingStatus == "CONFIRMED")
+                        {
+                            <span class="badge bg-success fs-6 px-3 py-2">
+
+                                Confirmed
+
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger fs-6 px-3 py-2">
+
+                                @Model.BookingStatus
+
+                            </span>
+                        }
+
+                    </div>
+
+                </div>
+
+                <table class="table table-borderless">
+
+                    <tr>
+
+                        <th width="220">
+
+                            🚆 Train
+
+                        </th>
+
+                        <td>
+
+                            @Model.Train?.TrainNumber
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            📍 Route
+
+                        </th>
+
+                        <td>
+
+                            @Model.Train?.StartStation
+
+                            →
+
+                            @Model.Train?.EndStation
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            📅 Travel Date
+
+                        </th>
+
+                        <td>
+
+                            @Model.TravelDate.ToString("dddd, dd MMMM yyyy")
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            💰 Total Amount
+
+                        </th>
+
+                        <td>
+
+                            <strong class="text-success">
+
+                                RM @Model.TotalAmount.ToString("0.00")
+
+                            </strong>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="card shadow-lg border-0 mt-4">
+
+            <div class="card-header bg-success text-white">
+
+                <h4 class="mb-0">
+
+                    💺 Reserved Seats
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    @foreach (var seat in Model.Seats)
+                    {
+                        <div class="col-lg-2 col-md-3 col-4 mb-3">
+
+                            <div class="card border-success">
+
+                                <div class="card-body text-center">
+
+                                    <h5 class="text-success">
+
+                                        @seat.SeatNumber
+
+                                    </h5>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card shadow-lg border-0 mt-4">
+
+            <div class="card-header bg-info text-white">
+
+                <h4 class="mb-0">
+
+                    ⭐ Special Requests
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                @if (Model.Requests.Any())
+                {
+                    <div class="list-group">
+
+                        @foreach (var request in Model.Requests)
+                        {
+                            <div class="list-group-item">
+
+                                <div class="d-flex justify-content-between">
+
+                                    <span>
+
+                                        @request.Description
+
+                                    </span>
+
+                                    <strong class="text-success">
+
+                                        + RM @request.AdditionalPrice
+
+                                    </strong>
+
+                                </div>
+
+                            </div>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-light">
+
+                        No special requests selected.
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="card shadow-lg border-0">
+
+            <div class="card-header bg-warning">
+
+                <h4 class="mb-0">
+
+                    📋 Booking Summary
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <p>
+
+                    Your reservation has been recorded successfully.
+
+                </p>
+
+                <hr />
+
+                <p>
+
+                    <strong>Booking ID</strong>
+
+                    <br />
+
+                    #@Model.BookingId
+
+                </p>
+
+                <p>
+
+                    <strong>Seats Reserved</strong>
+
+                    <br />
+
+                    @Model.Seats.Count
+
+                </p>
+
+                <p>
+
+                    <strong>Special Requests</strong>
+
+                    <br />
+
+                    @Model.Requests.Count
+
+                </p>
+
+                <p>
+
+                    <strong>Total Amount</strong>
+
+                    <br />
+
+                    <span class="text-success fs-4">
+
+                        RM @Model.TotalAmount.ToString("0.00")
+
+                    </span>
+
+                </p>
+
+                <hr />
+
+                <a asp-action="Index"
+                   class="btn btn-primary w-100">
+
+                    <i class="bi bi-arrow-left-circle"></i>
+
+                    Back to My Bookings
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,334 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+
+    <!-- Hero Section -->
+
+    <div class="card border-0 shadow-lg mb-5"
+         style="background:linear-gradient(135deg,#0F4C81,#2563EB); color:white; border-radius:20px;">
+
+        <div class="card-body p-5">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <h1 class="display-5 fw-bold text-white">
+
+                        Welcome, @ViewBag.User 👋
+
+                    </h1>
+
+                    <p class="lead mt-3">
+
+                        Manage your journeys, reserve train tickets,
+                        receive intelligent booking predictions and
+                        monitor your travel history from one place.
+
+                    </p>
+
+                    <a asp-controller="Booking"
+                       asp-action="Create"
+                       class="btn btn-light btn-lg mt-3">
+
+                        🚆 Book Your Journey
+
+                    </a>
+
+                </div>
+
+                <div class="col-lg-4 text-center">
+
+                    <div style="font-size:130px;">
+
+                        🚄
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Quick Actions -->
+
+    <h3 class="fw-bold text-primary mb-4">
+
+        Quick Actions
+
+    </h3>
+
+    <div class="row g-4">
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-lg h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div style="font-size:60px;">🎫</div>
+
+                    <h4 class="mt-3">
+
+                        New Booking
+
+                    </h4>
+
+                    <p class="text-muted">
+
+                        Reserve seats for your next journey.
+
+                    </p>
+
+                    <a asp-controller="Booking"
+                       asp-action="Create"
+                       class="btn btn-primary w-100">
+
+                        Book Now
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-lg h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div style="font-size:60px;">📋</div>
+
+                    <h4 class="mt-3">
+
+                        My Bookings
+
+                    </h4>
+
+                    <p class="text-muted">
+
+                        View, edit or cancel reservations.
+
+                    </p>
+
+                    <a asp-controller="Booking"
+                       asp-action="Index"
+                       class="btn btn-success w-100">
+
+                        Open
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-lg h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div style="font-size:60px;">📈</div>
+
+                    <h4 class="mt-3">
+
+                        Weekly Summary
+
+                    </h4>
+
+                    <p class="text-muted">
+
+                        Review your weekly booking activity.
+
+                    </p>
+
+                    <a asp-controller="Report"
+                       asp-action="Weekly"
+                       class="btn btn-warning w-100">
+
+                        View Report
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-lg h-100">
+
+                <div class="card-body text-center p-4">
+
+                    <div style="font-size:60px;">🔮</div>
+
+                    <h4 class="mt-3">
+
+                        Smart Prediction
+
+                    </h4>
+
+                    <p class="text-muted">
+
+                        Get booking availability and pricing predictions.
+
+                    </p>
+
+                    <a asp-controller="Booking"
+                       asp-action="Create"
+                       class="btn btn-info text-white w-100">
+
+                        Explore
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Information Section -->
+
+    <div class="row mt-5">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-lg">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h4 class="mb-0">
+
+                        🚆 Smart Reservation Features
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <h5>💺 Seat Reservation</h5>
+
+                            <p class="text-muted">
+
+                                Reserve multiple seats and manage recurring bookings.
+
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <h5>🔮 Intelligent Prediction</h5>
+
+                            <p class="text-muted">
+
+                                Receive availability and pricing trend recommendations before confirming a booking.
+
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <h5>📊 Weekly Reports</h5>
+
+                            <p class="text-muted">
+
+                                View your personal booking summary for the past seven days.
+
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <h5>⭐ Special Requests</h5>
+
+                            <p class="text-muted">
+
+                                Include optional services during the booking process.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-lg">
+
+                <div class="card-header bg-danger text-white">
+
+                    <h4 class="mb-0">
+
+                        Account
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:70px;">
+
+                        👤
+
+                    </div>
+
+                    <h4 class="mt-3">
+
+                        @ViewBag.User
+
+                    </h4>
+
+                    <p class="text-muted">
+
+                        You are currently signed in.
+
+                    </p>
+
+                    <a asp-controller="Account"
+                       asp-action="Logout"
+                       class="btn btn-danger w-100">
+
+                        Logout
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

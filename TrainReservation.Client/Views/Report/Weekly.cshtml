@@ -1,0 +1,436 @@
+﻿@model Shared.DTOs.WeeklySummaryDto
+
+@{
+    ViewData["Title"] = "Weekly Summary";
+}
+
+<div class="container-fluid">
+
+    <!-- Date Selection -->
+
+    <div class="card shadow-lg border-0 mb-4">
+
+        <div class="card-header bg-secondary text-white">
+
+            <h4 class="mb-0">
+
+                📅 Generate Weekly Report
+
+            </h4>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Weekly"
+                  method="get">
+
+                <div class="row align-items-end">
+
+                    <div class="col-md-4">
+
+                        <label class="form-label fw-bold">
+
+                            Select End Date
+
+                        </label>
+
+                        <input type="date"
+                               name="selectedDate"
+                               class="form-control"
+                               value="@(((DateTime)ViewBag.SelectedDate).ToString("yyyy-MM-dd"))" />
+
+                        <small class="text-muted">
+
+                            The report covers the 7 days ending on the selected date.
+
+                        </small>
+
+                    </div>
+
+                    <div class="col-md-3">
+
+                        <button class="btn btn-primary w-100">
+
+                            Generate Report
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    <!-- Header -->
+
+    <div class="card border-0 shadow-lg mb-5"
+         style="background:linear-gradient(135deg,#0F4C81,#2563EB); color:white; border-radius:20px;">
+
+        <div class="card-body p-5">
+
+            <div class="row align-items-center">
+
+                <div class="col-lg-8">
+
+                    <h1 class="fw-bold text-white">
+
+                        📈 Weekly Booking Summary
+
+                    </h1>
+
+                    <p class="lead">
+
+                        Personal booking activity for the selected reporting period.
+
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4 text-end">
+
+                    <h5 class="text-white">
+
+                        Reporting Period
+
+                    </h5>
+
+                    <h4 class="text-white">
+
+                        @Model.WeekStart.ToString("dd MMM yyyy")
+
+                    </h4>
+
+                    <h5 class="text-white">
+
+                        to
+
+                    </h5>
+
+                    <h4 class="text-white">
+
+                        @Model.WeekEnd.ToString("dd MMM yyyy")
+
+                    </h4>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Statistics -->
+
+    <div class="row g-4">
+
+        <div class="col-lg-3">
+
+            <div class="card border-0 shadow-lg h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:55px;">🎫</div>
+
+                    <h6 class="text-muted mt-3">
+
+                        Total Bookings
+
+                    </h6>
+
+                    <h1 class="text-primary fw-bold">
+
+                        @Model.TotalBookings
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="card border-0 shadow-lg h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:55px;">✅</div>
+
+                    <h6 class="text-muted mt-3">
+
+                        Confirmed
+
+                    </h6>
+
+                    <h1 class="text-success fw-bold">
+
+                        @Model.ConfirmedBookings
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="card border-0 shadow-lg h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:55px;">❌</div>
+
+                    <h6 class="text-muted mt-3">
+
+                        Cancelled
+
+                    </h6>
+
+                    <h1 class="text-danger fw-bold">
+
+                        @Model.CancelledBookings
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-3">
+
+            <div class="card border-0 shadow-lg h-100">
+
+                <div class="card-body text-center">
+
+                    <div style="font-size:55px;">💰</div>
+
+                    <h6 class="text-muted mt-3">
+
+                        Total Spent
+
+                    </h6>
+
+                    <h1 class="text-warning fw-bold">
+
+                        RM @Model.TotalSpent.ToString("0.00")
+
+                    </h1>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Details -->
+
+    <div class="row mt-5">
+
+        <div class="col-lg-8">
+
+            <div class="card border-0 shadow-lg">
+
+                <div class="card-header bg-primary text-white">
+
+                    <h4 class="mb-0">
+
+                        📊 Weekly Performance
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <table class="table table-hover align-middle">
+
+                        <tbody>
+
+                            <tr>
+
+                                <th width="45%">
+
+                                    📅 Reporting Period
+
+                                </th>
+
+                                <td>
+
+                                    @Model.WeekStart.ToString("dd MMM yyyy")
+
+                                    -
+
+                                    @Model.WeekEnd.ToString("dd MMM yyyy")
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+
+                                    🎫 Total Reservations
+
+                                </th>
+
+                                <td>
+
+                                    @Model.TotalBookings
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+
+                                    ✅ Confirmed Reservations
+
+                                </th>
+
+                                <td>
+
+                                    @Model.ConfirmedBookings
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+
+                                    ❌ Cancelled Reservations
+
+                                </th>
+
+                                <td>
+
+                                    @Model.CancelledBookings
+
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <th>
+
+                                    💵 Total Amount Spent
+
+                                </th>
+
+                                <td class="fw-bold text-success">
+
+                                    RM @Model.TotalSpent.ToString("0.00")
+
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="card border-0 shadow-lg">
+
+                <div class="card-header bg-success text-white">
+
+                    <h4 class="mb-0">
+
+                        📌 Summary
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+
+                        This report summarizes your booking activity for the selected seven-day period.
+
+                    </p>
+
+                    <hr />
+
+                    <ul class="list-group list-group-flush">
+
+                        <li class="list-group-item d-flex justify-content-between">
+
+                            <strong>Total Trips</strong>
+
+                            <span>@Model.TotalBookings</span>
+
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between">
+
+                            <strong>Successful Trips</strong>
+
+                            <span class="text-success">
+
+                                @Model.ConfirmedBookings
+
+                            </span>
+
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between">
+
+                            <strong>Cancelled Trips</strong>
+
+                            <span class="text-danger">
+
+                                @Model.CancelledBookings
+
+                            </span>
+
+                        </li>
+
+                        <li class="list-group-item d-flex justify-content-between">
+
+                            <strong>Total Spending</strong>
+
+                            <span class="text-primary fw-bold">
+
+                                RM @Model.TotalSpent.ToString("0.00")
+
+                            </span>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

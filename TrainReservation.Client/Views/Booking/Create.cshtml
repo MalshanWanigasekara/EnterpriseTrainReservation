@@ -1,0 +1,354 @@
+﻿@model TrainReservation.Client.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "New Booking";
+}
+
+<div class="row">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-lg border-0 mb-4">
+
+            <div class="card-header bg-primary text-white">
+
+                <h4 class="mb-0">
+
+                    🚆 Create New Booking
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <form asp-action="LoadSeats" method="post">
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+
+                            Select Train
+
+                        </label>
+
+                        <select asp-for="Booking.TrainId"
+                                class="form-select form-select-lg">
+
+                            <option value="">
+
+                                -- Select a Train --
+
+                            </option>
+
+                            @foreach (var train in Model.Trains)
+                            {
+                                <option value="@train.TrainId">
+
+                                    🚆 @train.TrainNumber |
+                                    @train.StartStation →
+                                    @train.EndStation
+
+                                </option>
+                            }
+
+                        </select>
+
+                        <span asp-validation-for="Booking.TrainId"
+                              class="text-danger"></span>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <label class="form-label fw-bold">
+
+                                Travel Date
+
+                            </label>
+
+                            @* <input asp-for="Booking.TravelDate"
+                                   type="date"
+                                   class="form-control form-control-lg"
+                                   min="@DateTime.Today.ToString("yyyy-MM-dd")" /> *@
+
+                            <input asp-for="Booking.TravelDate"
+                                   type="date"
+                                   class="form-control form-control-lg"
+                                   min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                                   value="@(Model.Booking.TravelDate == DateTime.MinValue
+                                        ? DateTime.Today.ToString("yyyy-MM-dd")
+                                        : Model.Booking.TravelDate.ToString("yyyy-MM-dd"))" />
+
+                        </div>
+
+                        <div class="col-md-6 d-flex align-items-end">
+
+                            <div class="form-check fs-5">
+
+                                <input asp-for="Booking.IsRecurring"
+                                       class="form-check-input" />
+
+                                <label class="form-check-label">
+
+                                    Recurring Booking
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4">
+
+                        <button class="btn btn-primary btn-lg">
+
+                            <i class="bi bi-search"></i>
+
+                            Load Available Seats
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="card shadow border-0">
+
+            <div class="card-body text-center">
+
+                <h4>
+
+                    🚄 Smart Booking
+
+                </h4>
+
+                <hr />
+
+                <p>
+
+                    Select your train and travel date to view
+
+                    available seats together with
+
+                    intelligent booking predictions.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@if (Model.SeatsLoaded)
+{
+
+    <form asp-action="Create" method="post">
+
+        <input asp-for="Booking.TrainId" type="hidden" />
+
+        <input asp-for="Booking.TravelDate" type="hidden" />
+
+        <input asp-for="Booking.IsRecurring" type="hidden" />
+
+        @if (Model.Prediction != null)
+        {
+
+            <div class="card border-warning shadow-lg mb-4">
+
+                <div class="card-header bg-warning">
+
+                    <h4 class="mb-0">
+
+                        🔮 Booking Prediction
+
+                    </h4>
+
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row text-center">
+
+                        <div class="col-md-4">
+
+                            <h6>
+
+                                Availability
+
+                            </h6>
+
+                            <span class="badge bg-danger fs-6">
+
+                                @Model.Prediction.AvailabilityPrediction
+
+                            </span>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <h6>
+
+                                Pricing Trend
+
+                            </h6>
+
+                            <p>
+
+                                @Model.Prediction.PricingTrend
+
+                            </p>
+
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <h6>
+
+                                Recommendation
+
+                            </h6>
+
+                            <p>
+
+                                @Model.Prediction.Recommendation
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        }
+
+        <div class="card shadow-lg border-0 mb-4">
+
+            <div class="card-header bg-success text-white">
+
+                <h4>
+
+                    💺 Select Seats
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    @foreach (var seat in Model.Seats)
+                    {
+                        <div class="col-lg-2 col-md-3 col-4 mb-3">
+
+                            <label class="card p-3 text-center shadow-sm">
+
+                                <input type="checkbox"
+                                       class="form-check-input mb-2"
+                                       name="Booking.SeatIds"
+                                       value="@seat.SeatId" />
+
+                                <strong>
+
+                                    @seat.SeatNumber
+
+                                </strong>
+
+                            </label>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card shadow-lg border-0 mb-4">
+
+            <div class="card-header bg-info text-white">
+
+                <h4>
+
+                    ⭐ Special Requests
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    @foreach (var request in Model.Requests)
+                    {
+                        <div class="col-md-6 mb-3">
+
+                            <label class="card p-3 shadow-sm">
+
+                                <input type="checkbox"
+                                       class="form-check-input me-2"
+                                       name="Booking.RequestIds"
+                                       value="@request.RequestId" />
+
+                                <strong>
+
+                                    @request.Description
+
+                                </strong>
+
+                                <br />
+
+                                <span class="text-success">
+
+                                    + RM @request.AdditionalPrice
+
+                                </span>
+
+                            </label>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="text-end mb-5">
+
+            <button class="btn btn-success btn-lg px-5">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                Confirm Booking
+
+            </button>
+
+        </div>
+
+    </form>
+
+}

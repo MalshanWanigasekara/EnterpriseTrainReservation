@@ -1,0 +1,293 @@
+﻿@model TrainReservation.Client.ViewModels.BookingViewModel
+
+@{
+    ViewData["Title"] = "Edit Booking";
+}
+
+<div class="row">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow-lg border-0 mb-4">
+
+            <div class="card-header bg-warning text-dark">
+
+                <h4 class="mb-0">
+
+                    ✏️ Edit Booking
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <form asp-action="LoadSeats"
+                      method="post">
+
+                    <input asp-for="Booking.UserNic"
+                           type="hidden" />
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-bold">
+
+                            Select Train
+
+                        </label>
+
+                        <select asp-for="Booking.TrainId"
+                                class="form-select form-select-lg">
+
+                            <option value="">
+
+                                Select Train
+
+                            </option>
+
+                            @foreach (var train in Model.Trains)
+                            {
+                                <option value="@train.TrainId">
+
+                                    🚆 @train.TrainNumber |
+                                    @train.StartStation →
+                                    @train.EndStation
+
+                                </option>
+                            }
+
+                        </select>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                            <label class="form-label fw-bold">
+
+                                Travel Date
+
+                            </label>
+
+                            <input asp-for="Booking.TravelDate"
+                                   type="date"
+                                   class="form-control form-control-lg" />
+
+                        </div>
+
+                        <div class="col-md-6 d-flex align-items-end">
+
+                            <div class="form-check fs-5">
+
+                                <input asp-for="Booking.IsRecurring"
+                                       class="form-check-input" />
+
+                                <label class="form-check-label">
+
+                                    Recurring Booking
+
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="mt-4">
+
+                        <button class="btn btn-warning btn-lg">
+
+                            <i class="bi bi-arrow-repeat"></i>
+
+                            Reload Available Seats
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="card shadow border-0">
+
+            <div class="card-body text-center">
+
+                <h4>
+
+                    ✨ Update Reservation
+
+                </h4>
+
+                <hr />
+
+                <p>
+
+                    Modify your train, travel date,
+                    seats and additional requests
+                    before confirming the changes.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@if (Model.SeatsLoaded)
+{
+
+    <form asp-action="Edit"
+          method="post">
+
+        <input asp-for="Booking.UserNic"
+               type="hidden" />
+
+        <input asp-for="Booking.TrainId"
+               type="hidden" />
+
+        <input asp-for="Booking.TravelDate"
+               type="hidden" />
+
+        <input asp-for="Booking.IsRecurring"
+               type="hidden" />
+
+        <div class="card shadow-lg border-0 mb-4">
+
+            <div class="card-header bg-success text-white">
+
+                <h4 class="mb-0">
+
+                    💺 Select Seats
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    @foreach (var seat in Model.Seats)
+                    {
+                        bool selected =
+                            Model.Booking.SeatIds.Contains(seat.SeatId);
+
+                        <div class="col-lg-2 col-md-3 col-4 mb-3">
+
+                            <label class="card p-3 text-center shadow-sm h-100">
+
+                                <input class="form-check-input mb-2"
+                                       type="checkbox"
+                                       name="Booking.SeatIds"
+                                       value="@seat.SeatId"
+                                       checked="@selected" />
+
+                                <strong>
+
+                                    @seat.SeatNumber
+
+                                </strong>
+
+                            </label>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card shadow-lg border-0 mb-4">
+
+            <div class="card-header bg-info text-white">
+
+                <h4 class="mb-0">
+
+                    ⭐ Special Requests
+
+                </h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    @foreach (var request in Model.Requests)
+                    {
+                        bool selected =
+                            Model.Booking.RequestIds.Contains(request.RequestId);
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="card p-3 shadow-sm h-100">
+
+                                <input class="form-check-input me-2"
+                                       type="checkbox"
+                                       name="Booking.RequestIds"
+                                       value="@request.RequestId"
+                                       checked="@selected" />
+
+                                <strong>
+
+                                    @request.Description
+
+                                </strong>
+
+                                <br />
+
+                                <span class="text-success">
+
+                                    + RM @request.AdditionalPrice.ToString("0.00")
+
+                                </span>
+
+                            </label>
+
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-end gap-3 mb-5">
+
+            <a asp-action="Index"
+               class="btn btn-secondary btn-lg px-4">
+
+                <i class="bi bi-x-circle"></i>
+
+                Cancel
+
+            </a>
+
+            <button class="btn btn-warning btn-lg px-5">
+
+                <i class="bi bi-pencil-square"></i>
+
+                Update Booking
+
+            </button>
+
+        </div>
+
+    </form>
+
+}
