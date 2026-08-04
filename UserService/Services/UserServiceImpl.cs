@@ -8,16 +8,16 @@ namespace UserService.Services
 {
     public class UserServiceImpl : IUserService
     {
-        private readonly IUserRepository repository;
+        private readonly IUserRepository userRepository;
 
         public UserServiceImpl(IUserRepository repository)
         {
-            this.repository = repository;
+            this.userRepository = repository;
         }
 
         public async Task<LoginResponse> LoginAsync(LoginRequest request)
         {
-            var user = await repository.LoginAsync(
+            var user = await userRepository.LoginAsync(
                 request.Nic,
                 request.Password);
 
@@ -47,8 +47,7 @@ namespace UserService.Services
 
         public async Task<List<UserDto>> GetAllUsersAsync()
         {
-            var users = await repository.GetAllAsync();
-
+            var users = await userRepository.GetAllAsync();
             return users.Select(u => new UserDto
             {
                 NIC = u.NIC,
@@ -71,9 +70,8 @@ namespace UserService.Services
                 Password = request.Password
             };
 
-            await repository.AddAsync(entity);
-
-            await repository.SaveChangesAsync();
+            await userRepository.AddAsync(entity);
+            await userRepository.SaveChangesAsync();
 
             return new UserDto
             {

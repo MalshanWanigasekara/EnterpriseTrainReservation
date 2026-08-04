@@ -4,8 +4,7 @@ namespace PredictionService.Interfaces
 {
     public interface IBookingClient
     {
-        Task<TrainOccupancyDto> GetTrainOccupancyAsync(
-            int trainId,
-            DateTime travelDate);
+        // obtaining current occupancy for prediction purposes
+        Task<TrainOccupancyDto> GetTrainOccupancyAsync( int trainId, DateTime travelDate);
     }
 }

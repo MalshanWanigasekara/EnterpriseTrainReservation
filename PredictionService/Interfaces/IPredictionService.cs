@@ -4,8 +4,7 @@ namespace PredictionService.Interfaces
 {
     public interface IPredictionService
     {
-        Task<PredictionNotificationDto> PredictAsync(
-            int trainId,
-            DateTime travelDate);
+        // non blocking predic funcntion
+        Task<PredictionNotificationDto> PredictAsync( int trainId,  DateTime travelDate);
     }
 }

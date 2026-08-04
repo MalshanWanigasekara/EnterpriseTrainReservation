@@ -9,22 +9,15 @@ namespace PredictionService.Controllers
     {
         private readonly IPredictionService predictionService;
 
-        public PredictionController(
-            IPredictionService predictionService)
+        public PredictionController( IPredictionService predictionService)
         {
             this.predictionService = predictionService;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPrediction(
-            int trainId,
-            DateTime travelDate)
+        public async Task<IActionResult> GetPrediction( int trainId,  DateTime travelDate)
         {
-            var prediction =
-                await predictionService.PredictAsync(
-                    trainId,
-                    travelDate);
-
+            var prediction = await predictionService.PredictAsync(trainId, travelDate);
             return Ok(prediction);
         }
     }

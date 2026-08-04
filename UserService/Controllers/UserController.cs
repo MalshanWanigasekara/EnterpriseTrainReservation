@@ -10,43 +10,36 @@ namespace UserService.Controllers
     [Route("api/users")]
     public class UserController : ControllerBase
     {
-        private readonly IUserService service;
+        private readonly IUserService userService;
 
         public UserController(IUserService service)
         {
-            this.service = service;
+            this.userService = service;
         }
 
-    
+
         [HttpPost("login")]
-        public async Task<IActionResult> Login(
-            [FromBody] Shared.Requests.LoginRequest request)
+        public async Task<IActionResult> Login([FromBody] Shared.Requests.LoginRequest request)
         {
-            LoginResponse response =
-                await service.LoginAsync(request);
+            LoginResponse response = await userService.LoginAsync(request);
 
             if (!response.Success)
                 return Unauthorized(response);
-
             return Ok(response);
         }
 
-      
-        [HttpPost]
-        public async Task<IActionResult> Register(
-            [FromBody] Shared.Requests.RegisterRequest request)
-        {
-            var user =
-                await service.CreateUserAsync(request);
 
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] Shared.Requests.RegisterRequest request)
+        {
+            var user = await userService.CreateUserAsync(request);
             return Created("", user);
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(
-                await service.GetAllUsersAsync());
+            return Ok(await userService.GetAllUsersAsync());
         }
     }
 }

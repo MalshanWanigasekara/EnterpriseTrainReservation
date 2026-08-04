@@ -7,9 +7,7 @@ namespace UserService.Interfaces
     public interface IUserService
     {
         Task<LoginResponse> LoginAsync(LoginRequest request);
-
         Task<List<UserDto>> GetAllUsersAsync();
-
         Task<UserDto> CreateUserAsync(RegisterRequest request);
     }
 }
