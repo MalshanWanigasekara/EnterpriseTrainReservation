@@ -7,11 +7,11 @@ namespace ReportingService.Controllers
     [Route("api/report")]
     public class ReportController : ControllerBase
     {
-        private readonly IReportService service;
+        private readonly IReportService reporttinService;
 
         public ReportController(IReportService service)
         {
-            this.service = service;
+            this.reporttinService = service;
         }
 
 
@@ -20,7 +20,7 @@ namespace ReportingService.Controllers
             string nic,
             [FromQuery] DateTime weekStart)
         {
-            var report = await service.GetWeeklySummaryAsync(
+            var report = await reporttinService.GetWeeklySummaryAsync(
                 nic,
                 weekStart);
 

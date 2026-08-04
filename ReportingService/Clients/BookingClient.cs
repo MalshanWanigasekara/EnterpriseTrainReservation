@@ -16,14 +16,11 @@ namespace ReportingService.Clients
         public async Task<List<BookingDto>> GetBookingsByUserAsync(
             string nic)
         {
-            var response =
-                await httpClient.GetAsync(
-                    $"http://localhost:5004/api/booking/user/{nic}");
+            var response = await httpClient.GetAsync( $"http://localhost:5004/api/booking/user/{nic}");
 
             response.EnsureSuccessStatusCode();
 
-            var json =
-                await response.Content.ReadAsStringAsync();
+            var json =  await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<List<BookingDto>>(json)
                    ?? new List<BookingDto>();
