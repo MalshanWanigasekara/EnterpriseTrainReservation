@@ -14,7 +14,7 @@ namespace PredictionService.Clients
 
             // Change this port
             httpClient.BaseAddress =
-                new Uri("http://localhost:5004");
+                new Uri("https://train-user-service-ebeya2d2bxbzfjgu.southeastasia-01.azurewebsites.net/");
         }
 
         public async Task<TrainOccupancyDto> GetTrainOccupancyAsync(

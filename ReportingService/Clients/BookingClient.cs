@@ -16,7 +16,7 @@ namespace ReportingService.Clients
         public async Task<List<BookingDto>> GetBookingsByUserAsync(
             string nic)
         {
-            var response = await httpClient.GetAsync( $"http://localhost:5004/api/booking/user/{nic}");
+            var response = await httpClient.GetAsync( $"https://train-booking-service-cmgpdkaze6bgd7cu.southeastasia-01.azurewebsites.net/api/booking/user/{nic}");
 
             response.EnsureSuccessStatusCode();
 
